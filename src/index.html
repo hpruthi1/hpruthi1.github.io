@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+    <title>Web AR</title>
+  </head>
+ <style>
+      body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0px 0px 0px 0px;
+      padding: 0;
+    }
+
+    .menu {
+      background-color: #ffffff;
+      color: black;
+      position: fixed;
+      bottom: 0;
+      right: 50%;
+      width: 140px;
+      border-radius: 50%;
+      margin-bottom: 40px;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      bottom: 10px;
+      right: 40%;
+      border: 3px solid #f1f1f1;
+      z-index: 2;
+    }
+
+    .form-container {
+      padding: 10px;
+      background-color: white;
+      width: 300px;
+      height: 300px;
+      text-align: center;
+    }
+
+    .form-container .cancel {
+      background-color: red;
+      position: relative;
+      bottom: -150px;
+      margin-bottom: -100px;
+      width: 100px;
+      height: 40px;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #4caf50;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #4caf50;
+      cursor: pointer;
+    }
+
+    .scale{
+      background-color: #ffffff;
+      color: black;
+      position: fixed;
+      bottom: 0;
+      right: 25%;
+      width: 140px;
+      border-radius: 50%;
+      margin-bottom: 40px;
+    }
+
+    .scalePopup{
+      display: none;
+      position: fixed;
+      bottom: 10px;
+      right: 15%;
+      border: 3px solid #f1f1f1;
+      z-index: 2;
+    }
+
+    .scaleForm-container{
+      padding: 10px;
+      background-color: white;
+      width: 300px;
+      height: 300px;
+      text-align: center;
+    }
+
+    .scaleForm-container .cancel_btn{
+      background-color: red;
+      position: relative;
+      bottom: -40px;
+      margin-bottom: -100px;
+      width: 100px;
+      height: 40px;
+    }
+ </style>
+  <body>
+    <!-- <script type="module" src="scripts/main.js"></script> -->
+    <script>
+      function openForm() {
+        document.getElementById("myForm").style.display = "block";
+      }
+
+      function closePanel() {
+        document.getElementById("myForm").style.display = "none";
+      }
+
+      function openScaleForm() {
+        document.getElementById("scaleForm").style.display = "block";
+      }
+
+      function closeScalePanel() {
+        document.getElementById("scaleForm").style.display = "none";
+      }
+    </script>
+
+    <button class="menu" onclick="openForm()">Open Menu</button>
+    <div class="popup" id="myForm">
+      <form class="form-container">
+        <h1>Models</h1>
+        <button type="button" id="button1" class="buttons">
+          Model1</button>
+          <button type="button" id="button2" class="buttons">
+            Model2</button>
+            <button type="button" id="button3" class="buttons">
+              Model3</button>
+        <button type="button" class="btn cancel" onclick="closePanel()">
+          Close
+          </div>
+        </button>
+      </form>
+
+    <button class="scale" onclick="openScaleForm()">Scale Model</button>
+    <div class="scalePopup" id="scaleForm">
+      <form class="scaleForm-container">
+        <h1>Scale</h1>
+        <div class="slidecontainer">
+          <p>Height:</p>
+          <input type="range" min="2" max="10" step="2" />
+          </div>
+  
+          <div class="scaleSlideContainer">
+            <p>Width:</p>
+            <input type="range" min="2" max="10" step="2" />
+            </div>
+        <button type="button" class="cancel_btn" onclick="closeScalePanel()">
+          Close        </button>
+          </div>
+      </form>
+  </body>
+</html>
