@@ -49,16 +49,17 @@ function init() {
         selectedItemURL,
         function (LoadModel) {
           console.log(selectedItemURL + "Added");
-          mesh = scene.add(LoadModel.scene);
+          mesh = LoadModel.scene;
+          mesh.position.setFromMatrixPosition(reticle.matrix);
+          mesh.scale.y = Math.random() * 2 + 1;
+          scene.add(mesh);
         },
         undefined,
         function (OnError) {
           console.log("Error");
         }
       );
-      mesh.position.setFromMatrixPosition(reticle.matrix);
-      mesh.scale.y = Math.random() * 2 + 1;
-      scene.add(mesh);
+
     }
   }
 
