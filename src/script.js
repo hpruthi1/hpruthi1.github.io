@@ -49,6 +49,7 @@ function init() {
         selectedItemURL,
         function (LoadModel) {
           console.log(selectedItemURL + "Added");
+          prompt('Loaded');
           mesh = LoadModel.scene;
           mesh.position.setFromMatrixPosition(reticle.matrix);
           mesh.scale.y = Math.random() * 2 + 1;
