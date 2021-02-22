@@ -171,6 +171,7 @@ let matSlider = document.getElementById("MaterialSlider");
 matSlider.addEventListener('change', () => {
   if (selectedObject != null) {
     selectedObject.color = Colors[matSlider.value];
+    selectedObject.material.needsUpdate = true;
   }
 });
 
@@ -178,14 +179,16 @@ let HeightSlider = document.getElementById("HeightSlider");
 HeightSlider.addEventListener('change', () => {
   if (selectedObject != null) {
     selectedObject.scale.y = [HeightSlider.value];
-    selectedObject.updateMatrix();
+    selectedObject.matrixAutoUpdate = true;
+    selectedObject.updateProjectionMatrix();
   }
 });
 let widthSlider = document.getElementById("WidthSlider");
 widthSlider.addEventListener('change', () => {
   if (selectedObject != null) {
     selectedObject.scale.x = [widthSlider.value];
-    selectedObject.updateMatrix();
+    selectedObject.matrixAutoUpdate = true;
+    selectedObject.updateProjectionMatrix();
   }
 });
 BindingSelectionEvent();
