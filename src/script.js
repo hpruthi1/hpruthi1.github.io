@@ -11,7 +11,7 @@ let reticle;
 
 let hitTestSource = null;
 let hitTestSourceRequested = false;
-
+let spawwnedObjects = [];
 function init() {
   container = document.createElement("div");
   document.body.appendChild(container);
@@ -46,16 +46,15 @@ function init() {
         selectedItemURL,
         function (LoadModel) {
           console.log(selectedItemURL + "Added");
-          alert("Loaded");
           mesh = LoadModel.scene;
           mesh.position.setFromMatrixPosition(reticle.matrix);
           mesh.scale.y = Math.random() * 2 + 1;
           scene.add(mesh);
+          spawwnedObjects.add(mesh);
         },
         undefined,
         function (OnError) {
           console.log("Error");
-          alert("Loaded");
         }
       );
     }
@@ -141,6 +140,33 @@ function BindingSelectionEvent() {
     });
   }
 }
+
+let Colors = {
+  1: "0xff0000",
+  2: "0x00ff00",
+  3: "0x0000ff",
+  4: "0xffff00"
+}
+let mouse = new THREE.Vector2();
+let raycast = new THREE.Raycaster();
+let selectedObject = null;
+window.addEventListener('click', () => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = (event.clientY / window.innerHeight) * 2 - 1;
+  raycast.setFromCamera(mouse, camera);
+
+  let objects = raycast.intersectObjects(spawwnedObjects);
+  if (objects[0] != null) {
+    selectedObject = objects[0].object;
+  }
+})
+let matSlider = document.getElementById("MaterialSlider");
+matSlider.addEventListener('change', () => {
+  if (selectedObject != null) {
+    selectedObject.color = Colors[matSlider.value];
+  }
+});
+console.log(matSlider.value);
 BindingSelectionEvent();
 init();
 animate();
