@@ -127,7 +127,6 @@ function render(timestamp, frame) {
   renderer.render(scene, camera);
 }
 
-
 let ItemInfo = {
   button1: "../static/Models/Black_chair.glb",
   button2: "../static/Models/chair.glb",
@@ -148,12 +147,12 @@ let Colors = {
   1: "0xff0000",
   2: "0x00ff00",
   3: "0x0000ff",
-  4: "0xffff00"
-}
+  4: "0xffff00",
+};
 let mouse = new THREE.Vector2();
 let raycast = new THREE.Raycaster();
 let selectedObject = null;
-window.addEventListener('click', (e) => {
+window.addEventListener("click", (e) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = (event.clientY / window.innerHeight) * 2 - 1;
   raycast.setFromCamera(mouse, camera);
@@ -162,33 +161,30 @@ window.addEventListener('click', (e) => {
   let objects = raycast.intersectObjects(spawwnedObjects);
   if (objects[0] != null) {
     selectedObject = objects[0].object;
-  }
-  else {
+  } else {
     e.preventDefault();
   }
-})
+});
 let matSlider = document.getElementById("MaterialSlider");
-matSlider.addEventListener('change', () => {
+matSlider.addEventListener("change", () => {
   if (selectedObject != null) {
-    selectedObject.color.setHex(Colors[matSlider.value]);
+    selectedObject.material.color.setHex(Colors[matSlider.value]);
     selectedObject.material.needsUpdate = true;
   }
 });
 
 let HeightSlider = document.getElementById("HeightSlider");
-HeightSlider.addEventListener('change', () => {
+HeightSlider.addEventListener("change", () => {
   if (selectedObject != null) {
     selectedObject.scale.y = [HeightSlider.value];
     selectedObject.matrixAutoUpdate = true;
-    selectedObject.updateProjectionMatrix();
   }
 });
 let widthSlider = document.getElementById("WidthSlider");
-widthSlider.addEventListener('change', () => {
+widthSlider.addEventListener("change", () => {
   if (selectedObject != null) {
     selectedObject.scale.x = [widthSlider.value];
     selectedObject.matrixAutoUpdate = true;
-    selectedObject.updateProjectionMatrix();
   }
 });
 BindingSelectionEvent();
