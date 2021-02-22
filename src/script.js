@@ -143,10 +143,10 @@ function BindingSelectionEvent() {
 
 //Object Selection
 let Colors = {
-  1: "0xff0000",
-  2: "0x00ff00",
-  3: "0x0000ff",
-  4: "0xffff00"
+  0: "0xff0000",
+  1: "0x00ff00",
+  2: "0x0000ff",
+  3: "0xffff00"
 }
 let mouse = new THREE.Vector2();
 let raycast = new THREE.Raycaster();
