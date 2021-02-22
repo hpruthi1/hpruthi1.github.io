@@ -145,10 +145,10 @@ function BindingSelectionEvent() {
 
 //Object Selection
 let Colors = {
-  1: "0xff0000",
-  2: "0x00ff00",
-  3: "0x0000ff",
-  4: "0xffff00",
+  Color1: "0xff0000",
+  Color2: "0x00ff00",
+  Color3: "0x0000ff",
+  Color4: "0xffff00",
 };
 let mouse = new THREE.Vector2();
 let raycast = new THREE.Raycaster();
@@ -166,11 +166,15 @@ window.addEventListener("click", (e) => {
     e.preventDefault();
   }
 });
-let matSlider = document.getElementById("MaterialSlider");
-matSlider.addEventListener("change", () => {
+let materialColor = document.getElementsByClassName("Colors")
+materialColor.addEventListener("change", () => {
   if (selectedObject != null) {
-    selectedObject.material.color.setHex(Colors[matSlider.value]);
-    selectedObject.material.needsUpdate = true;
+    for (let i = 0; i < materialColor.length; i++) {
+      if (materialColor[i].id === Colors[i]) {
+        selectedObject.material.color.setHex(Colors[i]);
+        selectedObject.material.needsUpdate = true;
+      }
+    }
   }
 });
 
