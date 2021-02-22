@@ -5,7 +5,7 @@ import { ARButton } from "../three/examples/jsm/webxr/ARButton.js";
 let container;
 let camera, scene, renderer;
 let controller;
-let selectedItemURL = "/static/Models/chair.glb";
+let selectedItemURL = "../static/Models/chair.glb";
 
 let reticle;
 
@@ -132,9 +132,9 @@ function render(timestamp, frame) {
 const loader = new GLTFLoader();
 
 let ItemInfo = {
-  button1: "/static/Models/Black_chair.glb",
-  button2: "/static/Models/chair.glb",
-  button3: "/static/Models/Final.glb",
+  button1: "../static/Models/Black_chair.glb",
+  button2: "../static/Models/chair.glb",
+  button3: "../static/Models/Final.glb",
 };
 
 let Buttons = document.getElementsByClassName("buttons");
