@@ -75,6 +75,7 @@ function init() {
 
   window.addEventListener("resize", onWindowResize);
 }
+const loader = new GLTFLoader();
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -125,7 +126,7 @@ function render(timestamp, frame) {
 
   renderer.render(scene, camera);
 }
-const loader = new GLTFLoader();
+
 
 let ItemInfo = {
   button1: "../static/Models/Black_chair.glb",
@@ -176,14 +177,14 @@ matSlider.addEventListener('change', () => {
 let HeightSlider = document.getElementById("HeightSlider");
 HeightSlider.addEventListener('change', () => {
   if (selectedObject != null) {
-    selectedObject.scale.y = [HeightSlider.value + 1];
+    selectedObject.scale.y = [HeightSlider.value];
   }
   console.log(HeightSlider.value);
 });
 let widthSlider = document.getElementById("WidthSlider");
 widthSlider.addEventListener('change', () => {
   if (selectedObject != null) {
-    selectedObject.scale.x = [widthSlider.value + 1];
+    selectedObject.scale.x = [widthSlider.value];
   }
   console.log(widthSlider.value);
 });
