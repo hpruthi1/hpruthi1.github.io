@@ -169,6 +169,19 @@ matSlider.addEventListener('change', () => {
     selectedObject.color = Colors[matSlider.value];
   }
 });
+
+let HeightSlider = document.getElementById("HeightSlider");
+HeightSlider.addEventListener('change', () => {
+  if (selectedObject != null) {
+    selectedObject.innerHeight = selectedObject.innerHeight * [HeightSlider.value + 1];
+  }
+});
+let widthSlider = document.getElementById("WidthSlider");
+widthSlider.addEventListener('change', () => {
+  if (selectedObject != null) {
+    selectedObject.innerWidth = selectedObject.innerWidth * [widthSlider.value + 1];
+  }
+});
 BindingSelectionEvent();
 init();
 animate();
