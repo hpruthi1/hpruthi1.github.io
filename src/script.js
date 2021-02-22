@@ -145,10 +145,10 @@ function BindingSelectionEvent() {
 
 //Object Selection
 let Colors = {
-  0: "0xff0000",
-  1: "0x00ff00",
-  2: "0x0000ff",
-  3: "0xffff00"
+  1: "0xff0000",
+  2: "0x00ff00",
+  3: "0x0000ff",
+  4: "0xffff00"
 }
 let mouse = new THREE.Vector2();
 let raycast = new THREE.Raycaster();
@@ -170,7 +170,7 @@ window.addEventListener('click', (e) => {
 let matSlider = document.getElementById("MaterialSlider");
 matSlider.addEventListener('change', () => {
   if (selectedObject != null) {
-    selectedObject.color = Colors[matSlider.value];
+    selectedObject.color.setHex(Colors[matSlider.value]);
     selectedObject.material.needsUpdate = true;
   }
 });
