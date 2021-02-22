@@ -141,6 +141,7 @@ function BindingSelectionEvent() {
   }
 }
 
+//Object Selection
 let Colors = {
   1: "0xff0000",
   2: "0x00ff00",
@@ -166,7 +167,6 @@ matSlider.addEventListener('change', () => {
     selectedObject.color = Colors[matSlider.value];
   }
 });
-console.log(matSlider.value);
 BindingSelectionEvent();
 init();
 animate();
