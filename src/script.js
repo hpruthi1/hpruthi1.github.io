@@ -152,7 +152,7 @@ let Colors = {
 let mouse = new THREE.Vector2();
 let raycast = new THREE.Raycaster();
 let selectedObject = null;
-window.addEventListener('click', () => {
+window.addEventListener('click', (e) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = (event.clientY / window.innerHeight) * 2 - 1;
   raycast.setFromCamera(mouse, camera);
@@ -161,6 +161,9 @@ window.addEventListener('click', () => {
   let objects = raycast.intersectObjects(spawwnedObjects);
   if (objects[0] != null) {
     selectedObject = objects[0].object;
+  }
+  else {
+    e.preventDefault();
   }
 })
 let matSlider = document.getElementById("MaterialSlider");
@@ -175,12 +178,14 @@ HeightSlider.addEventListener('change', () => {
   if (selectedObject != null) {
     selectedObject.scale.y = [HeightSlider.value + 1];
   }
+  console.log(HeightSlider.value);
 });
 let widthSlider = document.getElementById("WidthSlider");
 widthSlider.addEventListener('change', () => {
   if (selectedObject != null) {
     selectedObject.scale.x = [widthSlider.value + 1];
   }
+  console.log(widthSlider.value);
 });
 BindingSelectionEvent();
 init();
