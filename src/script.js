@@ -1,6 +1,6 @@
 import { GLTFLoader } from "../three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "../three/build/three.module.js";
-import { ARButton } from "../three/examples/jsm/webxr/ARButton.js";
+import { ARButton } from "../src/ARButton.js";
 
 let container;
 let camera, scene, renderer;
@@ -11,8 +11,6 @@ let reticle;
 
 let hitTestSource = null;
 let hitTestSourceRequested = false;
-
-
 
 function init() {
   container = document.createElement("div");
@@ -37,7 +35,6 @@ function init() {
   renderer.xr.enabled = true;
   container.appendChild(renderer.domElement);
 
-
   document.body.appendChild(
     ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] })
   );
@@ -49,7 +46,7 @@ function init() {
         selectedItemURL,
         function (LoadModel) {
           console.log(selectedItemURL + "Added");
-          alert('Loaded');
+          alert("Loaded");
           mesh = LoadModel.scene;
           mesh.position.setFromMatrixPosition(reticle.matrix);
           mesh.scale.y = Math.random() * 2 + 1;
@@ -58,10 +55,9 @@ function init() {
         undefined,
         function (OnError) {
           console.log("Error");
-          alert('Loaded');
+          alert("Loaded");
         }
       );
-
     }
   }
 
