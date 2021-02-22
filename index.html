@@ -20,19 +20,19 @@
       color: black;
       position: fixed;
       bottom: 0;
-      left: 10%;
-      width: 130px;
+      right: 40%;
+      width: 80px;
       border-radius: 50%;
       margin-bottom: 40px;
-      padding: 45px;
+      padding: 20px;
       text-align: center;
     }
 
     .popup {
       display: none;
       position: fixed;
-      bottom: 10px;
-      left: 2%;
+      bottom: 40px;
+      left: 5%;
       border: 3px solid #f1f1f1;
       z-index: 2;
     }
@@ -76,18 +76,18 @@
       position: fixed;
       bottom: 0;
       right: 10%;
-      width: 130px;
+      width: 75px;
       border-radius: 50%;
       margin-bottom: 40px;
-      padding: 45px;
+      padding: 20px;
       text-align: center;
     }
 
     .scalePopup{
       display: none;
       position: fixed;
-      bottom: 10px;
-      right: 4%;
+      bottom: 40px;
+      right: 5%;
       border: 3px solid #f1f1f1;
       z-index: 2;
     }
@@ -108,6 +108,45 @@
       width: 100px;
       height: 40px;
     }
+
+    .matChange{
+      background-color: #ffffff;
+      color: black;
+      position: fixed;
+      bottom: 0;
+      left: 10%;
+      width: 85px;
+      border-radius: 50%;
+      margin-bottom: 40px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .colorChangePopup{
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 5%;
+      border: 3px solid #f1f1f1;
+      z-index: 2;
+    }
+
+    .colorChangeForm-container{
+      padding: 10px;
+      background-color: white;
+      width: 300px;
+      height: 300px;
+      text-align: center;
+    }
+
+     .popupClose{
+      background-color: red;
+      position: relative;
+      bottom: -110px;
+      width: 100px;
+      height: 40px;
+    }
+
  </style>
   <body>
     <script>
@@ -126,9 +165,19 @@
       function closeScalePanel() {
         document.getElementById("scaleForm").style.display = "none";
       }
+
+      function openMatForm(){
+        document.getElementById("colorChangeForm").style.display = "block";
+      }
+
+      function closeColorPanel(){
+        document.getElementById("colorChangeForm").style.display = "none";
+      }
+
     </script>
 
-    <button class="menu" onclick="openForm()">Open Menu</button>
+    <div id = "content">
+      <button class="menu" onclick="openForm()">Open Menu</button>
     <div class="popup" id="myForm">
       <form class="form-container">
         <h1>Models</h1>
@@ -159,7 +208,20 @@
             </div>
         <button type="button" class="cancel_btn" onclick="closeScalePanel()">
           Close        </button>
-          </div>
       </form>
+    </div>
+
+      <button class="matChange" onclick="openMatForm()">Change Material</button>
+    <div class="colorChangePopup" id="colorChangeForm">
+      <form class="colorChangeForm-container">
+        <h1>Change Color</h1>
+        <div class="colorSlidecontainer">
+          <p>Color:</p>
+          <input type="range" min="0" max="4" step="1" />  </div>
+        <button type="button" class="popupClose" onclick="closeColorPanel()">
+          Close        </button>
+      </form>
+          </div>
+    </div> 
   </body>
 </html>
