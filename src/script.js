@@ -47,6 +47,7 @@ function init() {
         function (LoadModel) {
           console.log(selectedItemURL + "Added");
           mesh = LoadModel.scene;
+          mesh.layers.enabled = 1;
           mesh.position.setFromMatrixPosition(reticle.matrix);
           mesh.scale.y = Math.random() * 2 + 1;
           scene.add(mesh);
@@ -155,6 +156,7 @@ window.addEventListener('click', () => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = (event.clientY / window.innerHeight) * 2 - 1;
   raycast.setFromCamera(mouse, camera);
+  raycast.layers.set(1);
 
   let objects = raycast.intersectObjects(spawwnedObjects);
   if (objects[0] != null) {
