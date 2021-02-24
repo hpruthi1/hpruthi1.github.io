@@ -7,7 +7,6 @@ let camera, scene, renderer;
 let hitTestResults;
 let spawnned = false;
 let controller;
-let canvas = document.getElementById("myCanvas");
 let ItemInfo = {
   button1: "../static/Models/Tree.glb",
   button2: "../static/Models/Tree1.glb",
@@ -29,7 +28,7 @@ function init() {
 
   camera = new THREE.PerspectiveCamera(
     70,
-    canvas.innerWidth / canvas.innerHeight,
+    window.innerWidth / window.innerHeight,
     0.01,
     20
   );
@@ -39,8 +38,8 @@ function init() {
   scene.add(light);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(canvas.devicePixelRatio);
-  renderer.setSize(canvas.innerWidth, canvas.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true;
   container.appendChild(renderer.domElement);
 
@@ -162,10 +161,10 @@ deleteButton.addEventListener('click', Delete);
 
 //Object Selection
 let Colors = {
-  0: 0xff0000,
-  1: 0x00ff00,
-  2: 0x0000ff,
-  3: 0xffff00,
+  0: '0xff0000',
+  1: '0x00ff00',
+  2: '0x0000ff',
+  3: '0xffff00',
 };
 // let mouse = new THREE.Vector2();
 // let raycast = new THREE.Raycaster();
@@ -183,7 +182,6 @@ let Colors = {
 //     e.preventDefault();
 //   }
 // });
-console.log(Colors[0]);
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
