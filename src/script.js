@@ -7,7 +7,7 @@ let camera, scene, renderer;
 let hitTestResults;
 let spawnned = false;
 let controller;
-
+let canvas = document.getElementById("myCanvas");
 let ItemInfo = {
   button1: "../static/Models/Tree.glb",
   button2: "../static/Models/Tree1.glb",
@@ -29,7 +29,7 @@ function init() {
 
   camera = new THREE.PerspectiveCamera(
     70,
-    window.innerWidth / window.innerHeight,
+    canvas.innerWidth / canvas.innerHeight,
     0.01,
     20
   );
@@ -39,8 +39,8 @@ function init() {
   scene.add(light);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(canvas.devicePixelRatio);
+  renderer.setSize(canvas.innerWidth, canvas.innerHeight);
   renderer.xr.enabled = true;
   container.appendChild(renderer.domElement);
 
