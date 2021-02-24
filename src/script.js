@@ -162,10 +162,10 @@ deleteButton.addEventListener('click', Delete);
 
 //Object Selection
 let Colors = {
-  0: "0xff0000",
-  1: "0x00ff00",
-  2: "0x0000ff",
-  3: "0xffff00",
+  0: 0xff0000,
+  1: 0x00ff00,
+  2: 0x0000ff,
+  3: 0xffff00,
 };
 // let mouse = new THREE.Vector2();
 // let raycast = new THREE.Raycaster();
@@ -183,7 +183,7 @@ let Colors = {
 //     e.preventDefault();
 //   }
 // });
-
+console.log(Colors[0]);
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
