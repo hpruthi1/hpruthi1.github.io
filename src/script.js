@@ -51,7 +51,7 @@ function init() {
   //Selection Function
   let mesh;
   function onSelect() {
-    if (reticle.visible && !spawnned && selectedItemURL != null) {
+    if (reticle.visible && !spawnned && selectedItemURL != "") {
       loader.load(
         selectedItemURL,
         function (LoadModel) {
@@ -152,8 +152,8 @@ function Delete() {
   if (selectedObject != null) {
     scene.remove(selectedObject);
     selectedObject = null;
+    selectedItemURL = "";
     spawnned = false;
-    selectedItemURL = null;
   }
 }
 
