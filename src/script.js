@@ -9,7 +9,7 @@ let spawnned = false;
 let controller;
 
 let ItemInfo = {
-  button1: "./static/Models/Tree.glb",
+  button1: "../static/Models/Tree.glb",
   button2: "../static/Models/Tree1.glb",
   button3: "../static/Models/Tree2.glb"
 };
