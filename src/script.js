@@ -2,18 +2,25 @@ import { GLTFLoader } from "../three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "../three/build/three.module.js";
 import { ARButton } from "../src/ARButton.js";
 
-
-
 let container;
 let camera, scene, renderer;
+let hitTestResults;
+let spawnned = false;
 let controller;
-let selectedItemURL = "../static/Models/chair.glb";
+
+let ItemInfo = {
+  button1: "../static/Models/Tree.glb",
+  button2: "../static/Models/Tree1.glb",
+  button3: "../static/Models/Tree2.glb"
+};
+let selectedItemURL = ItemInfo.button1;
 
 let reticle;
 
 let hitTestSource = null;
 let hitTestSourceRequested = false;
-let spawwnedObjects = [];
+let selectedObject = null;
+// let spawwnedObjects = [];
 function init() {
   container = document.createElement("div");
   document.body.appendChild(container);
@@ -41,9 +48,10 @@ function init() {
     ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] })
   );
 
+  //Selection Function
   let mesh;
   function onSelect() {
-    if (reticle.visible) {
+    if (reticle.visible && !spawnned) {
       loader.load(
         selectedItemURL,
         function (LoadModel) {
@@ -51,9 +59,10 @@ function init() {
           mesh = LoadModel.scene;
           mesh.layers.enabled = 1;
           mesh.position.setFromMatrixPosition(reticle.matrix);
-          mesh.scale.y = Math.random() * 2 + 1;
           scene.add(mesh);
-          spawwnedObjects.push(mesh);
+          selectedObject = mesh;
+          // spawwnedObjects.push(mesh);
+          spawnned = true;
         },
         undefined,
         function (OnError) {
@@ -61,6 +70,13 @@ function init() {
         }
       );
     }
+  }
+
+  //Delete Function to remove selected mesh.
+  function Delete() {
+    scene.remove(selectedObject);
+    selectedObject = null;
+    spawnned = false;
   }
 
   controller = renderer.xr.getController(0);
@@ -113,7 +129,7 @@ function render(timestamp, frame) {
     }
 
     if (hitTestSource) {
-      const hitTestResults = frame.getHitTestResults(hitTestSource);
+      hitTestResults = frame.getHitTestResults(hitTestSource);
 
       if (hitTestResults.length) {
         const hit = hitTestResults[0];
@@ -128,12 +144,6 @@ function render(timestamp, frame) {
 
   renderer.render(scene, camera);
 }
-
-let ItemInfo = {
-  button1: "../static/Models/Black_chair.glb",
-  button2: "../static/Models/chair.glb",
-  button3: "../static/Models/Final.glb",
-};
 
 let Buttons = document.getElementsByClassName("buttons");
 function BindingSelectionEvent() {
@@ -151,23 +161,22 @@ let Colors = {
   2: "0x0000ff",
   3: "0xffff00",
 };
-let mouse = new THREE.Vector2();
-let raycast = new THREE.Raycaster();
-let selectedObject = null;
-window.addEventListener("click", (e) => {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
-  raycast.setFromCamera(mouse, camera);
+// let mouse = new THREE.Vector2();
+// let raycast = new THREE.Raycaster();
+// window.addEventListener("click", (e) => {
+//   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+//   mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
+//   raycast.setFromCamera(mouse, camera);
 
-  let objects = raycast.intersectObjects(spawwnedObjects);
-  console.log(selectedObject);
+//   let objects = raycast.intersectObjects(spawwnedObjects);
+//   console.log(selectedObject);
 
-  if (objects[0] != null) {
-    selectedObject = objects[0].object;
-  } else {
-    e.preventDefault();
-  }
-});
+//   if (objects[0] != null) {
+//     selectedObject = objects[0].object;
+//   } else {
+//     e.preventDefault();
+//   }
+// });
 
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
