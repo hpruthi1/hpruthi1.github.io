@@ -15,16 +15,6 @@
       padding: 0;
     }
 
-    .center {
-      background-color: white;
-      height: 170px;
-width: 1000px;
-z-index: 999;
-display: block;
-position: fixed;
-bottom: 0px;
-}
-
     .menu {
       background-color: #ffffff;
       color: black;
@@ -194,25 +184,23 @@ bottom: 0px;
     </script>
 
     <div id = "content">
+      <button class="menu" onclick="openForm()">Open Menu</button>
+    <div class="popup" id="myForm">
+      <form class="form-container">
+        <h1>Models</h1>
+        <button type="button" id="button1" class="buttons">
+          Model1</button>
+          <button type="button" id="button2" class="buttons">
+            Model2</button>
+            <button type="button" id="button3" class="buttons">
+              Model3</button>
+        <button type="button" class="btn cancel" onclick="closePanel()">
+          Close
+          </div>
+        </button>
+      </form>
 
-      <div class="center">
-        <button class="menu" onclick="openForm()">Open Menu</button>
-        <div class="popup" id="myForm">
-          <form class="form-container">
-            <h1>Models</h1>
-            <button type="button" id="button1" class="buttons">
-              Model1</button>
-              <button type="button" id="button2" class="buttons">
-                Model2</button>
-                <button type="button" id="button3" class="buttons">
-                  Model3</button>
-            <button type="button" class="btn cancel" onclick="closePanel()">
-              Close
-              </div>
-            </button>
-          </form>
-
-          <button class="scale" onclick="openScaleForm()">Scale Model</button>
+    <button class="scale" onclick="openScaleForm()">Scale Model</button>
     <div class="scalePopup" id="scaleForm">
       <form class="scaleForm-container">
         <h1>Scale</h1>
@@ -230,8 +218,7 @@ bottom: 0px;
       </form>
     </div>
 
-    
-    <button class="matChange" onclick="openMatForm()">Change Material</button>
+      <button class="matChange" onclick="openMatForm()">Change Material</button>
     <div class="colorChangePopup" id="colorChangeForm">
       <form class="colorChangeForm-container">
           <h1>Colors</h1>
@@ -250,7 +237,6 @@ bottom: 0px;
           <div>
             <button type = "button" id="DeleteButton" class="deleteBtn">Delete Model</button>
           </div>
-      </div>
 
     </div> 
   </body>
