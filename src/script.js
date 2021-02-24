@@ -2,6 +2,8 @@ import { GLTFLoader } from "../three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "../three/build/three.module.js";
 import { ARButton } from "../src/ARButton.js";
 
+
+
 let container;
 let camera, scene, renderer;
 let controller;
@@ -48,15 +50,14 @@ function init() {
           console.log(selectedItemURL + "Added");
           mesh = LoadModel.scene;
           mesh.layers.enabled = 1;
-          mesh.layers.set(1);
           mesh.position.setFromMatrixPosition(reticle.matrix);
           mesh.scale.y = Math.random() * 2 + 1;
           scene.add(mesh);
-          spawwnedObjects.add(mesh);
+          spawwnedObjects.push(mesh);
         },
         undefined,
         function (OnError) {
-          console.log("Error");
+          console.log("Error " + OnError);
         }
       );
     }
@@ -155,17 +156,19 @@ let raycast = new THREE.Raycaster();
 let selectedObject = null;
 window.addEventListener("click", (e) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = (event.clientY / window.innerHeight) * 2 - 1;
+  mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
   raycast.setFromCamera(mouse, camera);
-  raycast.layers.set(1);
 
   let objects = raycast.intersectObjects(spawwnedObjects);
+  console.log(selectedObject);
+
   if (objects[0] != null) {
     selectedObject = objects[0].object;
   } else {
     e.preventDefault();
   }
 });
+
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
