@@ -9,7 +9,7 @@ let spawnned = false;
 let controller;
 
 let ItemInfo = {
-  button1: "../static/Models/Tree.glb",
+  button1: "./static/Models/Tree.glb",
   button2: "../static/Models/Tree1.glb",
   button3: "../static/Models/Tree2.glb"
 };
@@ -61,7 +61,7 @@ function init() {
           mesh.position.setFromMatrixPosition(reticle.matrix);
           scene.add(mesh);
           selectedObject = mesh;
-          // spawwnedObjects.push(mesh);
+          //spawwnedObjects.push(mesh);
           spawnned = true;
         },
         undefined,
@@ -70,13 +70,6 @@ function init() {
         }
       );
     }
-  }
-
-  //Delete Function to remove selected mesh.
-  function Delete() {
-    scene.remove(selectedObject);
-    selectedObject = null;
-    spawnned = false;
   }
 
   controller = renderer.xr.getController(0);
@@ -154,6 +147,17 @@ function BindingSelectionEvent() {
   }
 }
 
+//Delete Function to remove selected mesh.
+function Delete() {
+  if (selectedObject != null) {
+    scene.remove(selectedObject);
+    selectedObject = null;
+    spawnned = false;
+  }
+}
+let deleteButton = document.getElementById("DeleteButton");
+deleteButton.addEventListener('click', Delete);
+
 //Object Selection
 let Colors = {
   0: "0xff0000",
@@ -181,9 +185,9 @@ let Colors = {
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
-    if (a != null) {
-      a.material.color.setHex(Colors[i]);
-      a.material.needsUpdate = true;
+    if (selectedObject != null) {
+      selectedObject.material.color.setHex(Colors[i]);
+      selectedObject.material.needsUpdate = true;
     }
   });
 }
@@ -202,6 +206,7 @@ widthSlider.addEventListener("change", () => {
     selectedObject.matrixAutoUpdate = true;
   }
 });
+
 BindingSelectionEvent();
 init();
 animate();
