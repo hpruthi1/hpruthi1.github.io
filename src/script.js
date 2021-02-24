@@ -51,7 +51,7 @@ function init() {
   //Selection Function
   let mesh;
   function onSelect() {
-    if (reticle.visible && !spawnned) {
+    if (reticle.visible && !spawnned && selectedItemURL != null) {
       loader.load(
         selectedItemURL,
         function (LoadModel) {
@@ -153,8 +153,10 @@ function Delete() {
     scene.remove(selectedObject);
     selectedObject = null;
     spawnned = false;
+    selectedItemURL = null;
   }
 }
+
 let deleteButton = document.getElementById("DeleteButton");
 deleteButton.addEventListener('click', Delete);
 
