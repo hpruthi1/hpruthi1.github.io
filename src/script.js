@@ -5,21 +5,21 @@ import { ARButton } from "../src/ARButton.js";
 let container;
 let camera, scene, renderer;
 let hitTestResults;
-let spawnned = false;
 let controller;
+let canRaycast = true;
 let ItemInfo = {
-  button1: "../static/Models/Tree.glb",
+  button1: "./static/Models/Tree.glb",
   button2: "../static/Models/Tree1.glb",
   button3: "../static/Models/Tree2.glb"
 };
 let selectedItemURL = ItemInfo.button1;
-
 let reticle;
 
 let hitTestSource = null;
 let hitTestSourceRequested = false;
 let selectedObject = null;
-// let spawwnedObjects = [];
+let spawwnedObjects = [];
+
 function init() {
   container = document.createElement("div");
   document.body.appendChild(container);
@@ -48,27 +48,45 @@ function init() {
   );
 
   //Selection Function
-  let mesh;
+  let mouse = new THREE.Vector2();
+  let raycast = new THREE.Raycaster();
+  var mesh;
+
   function onSelect() {
-    if (reticle.visible && !spawnned && selectedItemURL != "") {
-      loader.load(
-        selectedItemURL,
-        function (LoadModel) {
-          console.log(selectedItemURL + "Added");
-          mesh = LoadModel.scene;
-          mesh.layers.enabled = 1;
-          mesh.position.setFromMatrixPosition(reticle.matrix);
-          scene.add(mesh);
-          selectedObject = mesh;
-          //spawwnedObjects.push(mesh);
-          spawnned = true;
-        },
-        undefined,
-        function (OnError) {
-          console.log("Error " + OnError);
-        }
-      );
+    let hitObject = Raycast();
+    if (hitObject) {
+      selectedObject = hitObject;
     }
+    else {
+      if (reticle.visible) {
+        loader.load(
+          selectedItemURL,
+          function (LoadModel) {
+            mesh = LoadModel.scene;
+            mesh.position.setFromMatrixPosition(reticle.matrix);
+            scene.add(mesh);
+            spawwnedObjects.push(mesh);
+          },
+          undefined,
+          function (OnError) {
+            console.log("Error " + OnError);
+          }
+        );
+      }
+    }
+  }
+  window.addEventListener('click', () => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
+  })
+
+  function Raycast() {
+    raycast.setFromCamera(mouse, camera);
+    let objects = raycast.intersectObjects(spawwnedObjects);
+    spawwnedObjects.forEach(element => {
+      if (objects[0] === element)
+        return objects[0];
+    });
   }
 
   controller = renderer.xr.getController(0);
@@ -123,9 +141,8 @@ function render(timestamp, frame) {
     if (hitTestSource) {
       hitTestResults = frame.getHitTestResults(hitTestSource);
 
-      if (hitTestResults.length) {
+      if (hitTestResults.length && canRaycast) {
         const hit = hitTestResults[0];
-
         reticle.visible = true;
         reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
       } else {
@@ -166,22 +183,7 @@ let Colors = {
   2: '0x0000ff',
   3: '0xffff00',
 };
-// let mouse = new THREE.Vector2();
-// let raycast = new THREE.Raycaster();
-// window.addEventListener("click", (e) => {
-//   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-//   mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
-//   raycast.setFromCamera(mouse, camera);
 
-//   let objects = raycast.intersectObjects(spawwnedObjects);
-//   console.log(selectedObject);
-
-//   if (objects[0] != null) {
-//     selectedObject = objects[0].object;
-//   } else {
-//     e.preventDefault();
-//   }
-// });
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
