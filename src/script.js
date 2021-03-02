@@ -62,7 +62,7 @@ function init() {
     // if (hitObject) {
     //   selectedObject = hitObject;
     // } else {
-    if (reticle.visible && !isBlockingUI) {
+    if (reticle.visible && !isBlockingUI && selectedItemURL != "") {
       loader.load(
         selectedItemURL,
         function (LoadModel) {
@@ -70,6 +70,7 @@ function init() {
           mesh.position.setFromMatrixPosition(reticle.matrix);
           scene.add(mesh);
           spawwnedObjects.push(mesh);
+          selectedItemURL = "";
         },
         undefined,
         function (OnError) {
