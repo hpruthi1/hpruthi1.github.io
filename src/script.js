@@ -10,7 +10,7 @@ let canRaycast = true;
 let ItemInfo = {
   button1: "./static/Models/Tree.glb",
   button2: "../static/Models/Tree1.glb",
-  button3: "../static/Models/Tree2.glb"
+  button3: "../static/Models/Tree2.glb",
 };
 let selectedItemURL = ItemInfo.button1;
 let reticle;
@@ -19,6 +19,9 @@ let hitTestSource = null;
 let hitTestSourceRequested = false;
 let selectedObject = null;
 let spawwnedObjects = [];
+
+let btn1;
+let isBlockingUI = false;
 
 function init() {
   container = document.createElement("div");
@@ -32,6 +35,15 @@ function init() {
     0.01,
     20
   );
+
+  btn1 = document.querySelector("button");
+  btn1.onmouseenter = function () {
+    isBlockingUI = true;
+  };
+
+  btn1.onmouseleave = function () {
+    isBlockingUI = false;
+  };
 
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   light.position.set(0.5, 1, 0.25);
@@ -54,38 +66,36 @@ function init() {
 
   function onSelect() {
     let hitObject = Raycast();
-    if (hitObject) {
-      selectedObject = hitObject;
-    }
-    else {
-      if (reticle.visible) {
-        loader.load(
-          selectedItemURL,
-          function (LoadModel) {
-            mesh = LoadModel.scene;
-            mesh.position.setFromMatrixPosition(reticle.matrix);
-            scene.add(mesh);
-            spawwnedObjects.push(mesh);
-          },
-          undefined,
-          function (OnError) {
-            console.log("Error " + OnError);
-          }
-        );
-      }
+    // if (hitObject) {
+    //   selectedObject = hitObject;
+    // } else {
+    if (reticle.visible && !isBlockingUI) {
+      loader.load(
+        selectedItemURL,
+        function (LoadModel) {
+          mesh = LoadModel.scene;
+          mesh.position.setFromMatrixPosition(reticle.matrix);
+          scene.add(mesh);
+          spawwnedObjects.push(mesh);
+        },
+        undefined,
+        function (OnError) {
+          console.log("Error " + OnError);
+        }
+      );
     }
   }
-  window.addEventListener('click', () => {
+  //}
+  window.addEventListener("click", () => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
-  })
+  });
 
   function Raycast() {
     raycast.setFromCamera(mouse, camera);
     let objects = raycast.intersectObjects(spawwnedObjects);
-    spawwnedObjects.forEach(element => {
-      if (objects[0] === element)
-        return objects[0];
+    spawwnedObjects.forEach((element) => {
+      if (objects[0] === element) return objects[0];
     });
   }
 
@@ -174,14 +184,14 @@ function Delete() {
 }
 
 let deleteButton = document.getElementById("DeleteButton");
-deleteButton.addEventListener('click', Delete);
+deleteButton.addEventListener("click", Delete);
 
 //Object Selection
 let Colors = {
-  0: '0xff0000',
-  1: '0x00ff00',
-  2: '0x0000ff',
-  3: '0xffff00',
+  0: "0xff0000",
+  1: "0x00ff00",
+  2: "0x0000ff",
+  3: "0xffff00",
 };
 
 let materialColor = document.getElementsByClassName("colors");
