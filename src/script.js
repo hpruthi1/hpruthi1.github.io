@@ -36,14 +36,7 @@ function init() {
     20
   );
 
-  btn1 = document.querySelector("button");
-  btn1.onmouseenter = function () {
-    isBlockingUI = true;
-  };
-
-  btn1.onmouseleave = function () {
-    isBlockingUI = false;
-  };
+  //btn1 = document.getElementsByClassName("menu");
 
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   light.position.set(0.5, 1, 0.25);
@@ -172,6 +165,20 @@ function BindingSelectionEvent() {
     });
   }
 }
+
+function BlockUI() {
+  for (let i = 0; i < Buttons.length; i++) {
+    Buttons[i].addEventListener(onmouseenter, () => {
+      isBlockingUI = true;
+    });
+  }
+
+  Buttons[i].addEventListener(onmouseleave, () => {
+    isBlockingUI = false;
+  });
+}
+
+BlockUI();
 
 //Delete Function to remove selected mesh.
 function Delete() {
