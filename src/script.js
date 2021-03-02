@@ -171,11 +171,11 @@ function BlockUI() {
     Buttons[i].addEventListener(onmouseenter, () => {
       isBlockingUI = true;
     });
-  }
 
-  Buttons[i].addEventListener(onmouseleave, () => {
-    isBlockingUI = false;
-  });
+    Buttons[i].addEventListener(onmouseleave, () => {
+      isBlockingUI = false;
+    });
+  }
 }
 
 BlockUI();
