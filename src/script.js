@@ -8,9 +8,9 @@ let hitTestResults;
 let controller;
 let canRaycast = true;
 let ItemInfo = {
-  button1: "./static/Models/Tree.glb",
-  button2: "../static/Models/Tree1.glb",
-  button3: "../static/Models/Tree2.glb",
+  button1: "./static/Models/Sofa/Sofa.gltf",
+  button2: "../static/Models/Chair/Chair.gltf",
+  button3: "../static/Models/Bed/Bed.gltf",
 };
 let selectedItemURL = ItemInfo.button1;
 let reticle;
@@ -70,7 +70,9 @@ function init() {
           mesh.position.setFromMatrixPosition(reticle.matrix);
           scene.add(mesh);
           spawwnedObjects.push(mesh);
+          selectedObject = mesh;
           selectedItemURL = "";
+          console.log(selectedObject);
         },
         undefined,
         function (OnError) {
