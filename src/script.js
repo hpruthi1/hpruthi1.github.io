@@ -73,7 +73,6 @@ function init() {
           spawwnedObjects.push(mesh);
           selectedObject = mesh;
           selectedItemURL = "";
-          console.log(mesh)
         },
         undefined,
         function (OnError) {
@@ -222,7 +221,7 @@ let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
     if (selectedObject != null) {
-      materialLocation.selectedObject.userData.name(Colors[i]);
+      materialLocation[selectedObject.userData.name](Colors[i]);
       selectedObject.material.needsUpdate = true;
     }
   });
