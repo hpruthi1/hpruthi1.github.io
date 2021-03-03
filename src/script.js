@@ -9,8 +9,8 @@ let controller;
 let canRaycast = true;
 let ItemInfo = {
   button1: "./static/Models/Sofa/Sofa.gltf",
-  button2: "../static/Models/Chair/Chair.gltf",
-  button3: "../static/Models/Bed/Bed.gltf",
+  button2: "../static/Models/Couch/Couch.gltf",
+  button3: "../static/Models/Tree/Tree.glb",
 };
 let selectedItemURL = ItemInfo.button1;
 let reticle;
@@ -208,7 +208,8 @@ let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
     if (selectedObject != null) {
-      selectedObject.material.color.setHex(Colors[i]);
+      // selectedObject.material.color.setHex(Colors[i]);
+      selectedObject.MeshStandardMaterial.color.setHex(Colors[i]);
       selectedObject.material.needsUpdate = true;
     }
   });
