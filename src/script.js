@@ -67,11 +67,13 @@ function init() {
         selectedItemURL,
         function (LoadModel) {
           mesh = LoadModel.scene;
+          mesh.userData.name = selectedItemURL;
           mesh.position.setFromMatrixPosition(reticle.matrix);
           scene.add(mesh);
           spawwnedObjects.push(mesh);
           selectedObject = mesh;
           selectedItemURL = "";
+          console.log(mesh)
         },
         undefined,
         function (OnError) {
@@ -203,26 +205,24 @@ let Colors = {
   3: "0xffff00",
 };
 
-let materialLocation = [
-  function (Color) {//Sofa
+let materialLocation = {
+  "./static/Models/Sofa/Sofa.gltf": function (Color) {//Sofa
     selectedObject.children[0].material.color.setHex(Color);
   },
-  function (Color) { //Bench
+  "./static/Models/Bench/Bench.gltf": function (Color) { //Bench
     selectedObject.children[0].material.color.setHex(Color);
   },
-  function (Color) { //Tree
+  "./static/Models/Tree/Tree.glb": function (Color) { //Tree
     selectedObject.children[0].children.forEach(element => {
       element.material.color.setHex(Color);
     });
   }
-]
+}
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
     if (selectedObject != null) {
-      for (let index = 0; index < materialLocation.length; index++) {
-        materialLocation[index](Colors[i]);
-      }
+      materialLocation.selectedObject.userData.name(Colors[i]);
       selectedObject.material.needsUpdate = true;
     }
   });
