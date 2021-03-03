@@ -9,8 +9,8 @@ let controller;
 let canRaycast = true;
 let ItemInfo = {
   button1: "./static/Models/Sofa/Sofa.gltf",
-  button2: "../static/Models/Couch/Couch.gltf",
-  button3: "../static/Models/Tree/Tree.glb",
+  button2: "./static/Models/Bench/Bench.gltf",
+  button3: "./static/Models/Tree/Tree.glb",
 };
 let selectedItemURL = ItemInfo.button1;
 let reticle;
@@ -72,7 +72,6 @@ function init() {
           spawwnedObjects.push(mesh);
           selectedObject = mesh;
           selectedItemURL = "";
-          console.log(selectedObject);
         },
         undefined,
         function (OnError) {
@@ -204,28 +203,26 @@ let Colors = {
   3: "0xffff00",
 };
 
+let materialLocation = [
+  function (Color) {//Sofa
+    selectedObject.children[0].material.color.setHex(Color);
+  },
+  function (Color) { //Bench
+    selectedObject.children[0].material.color.setHex(Color);
+  },
+  function (Color) { //Tree
+    selectedObject.children[0].children.forEach(element => {
+      element.material.color.setHex(Color);
+    });
+  }
+]
 let materialColor = document.getElementsByClassName("colors");
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
     if (selectedObject != null) {
-      // selectedObject.material.color.setHex(Colors[i]);
-      selectedObject.traverse(function (child) {
-        if (child instanceof THREE.Mesh) {
-          if (child.material) {
-            if (child.material.length > 1) {
-              if (child.material[0].MeshStandardMaterial) {
-                child.material[0].color.setHex(Colors[i]);
-                console.log("material map is ", child.material[0].map); //can get map but its image is undefined
-                console.log("material map image is ", child.material[0].map.image); //material map image is  undefined
-              }
-            } else if (child.material.MeshStandardMaterial) {
-              console.log("material map is ", child.material.map); //can get map but its image is undefined
-              console.log("material map image is ", child.material.map.image); //material map image is  undefined
-            }
-          }
-        }
-      });
-      // selectedObject.MeshStandardMaterial.color.setHex(Colors[i]);
+      for (let index = 0; index < materialLocation.length; index++) {
+        materialLocation[index](Colors[i]);
+      }
       selectedObject.material.needsUpdate = true;
     }
   });
