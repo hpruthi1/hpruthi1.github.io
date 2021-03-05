@@ -67,12 +67,11 @@ function init() {
         selectedItemURL,
         function (LoadModel) {
           mesh = LoadModel.scene;
-          mesh.userData.name = selectedItemURL;
+          // mesh.userData.name = selectedItemURL;
           mesh.position.setFromMatrixPosition(reticle.matrix);
           scene.add(mesh);
           spawwnedObjects.push(mesh);
           selectedObject = mesh;
-          selectedItemURL = "";
         },
         undefined,
         function (OnError) {
@@ -204,24 +203,36 @@ let Colors = {
   3: "0xffff00",
 };
 
-let materialLocation = {
-  "./static/Models/Sofa/Sofa.gltf": function (Color) {//Sofa
-    selectedObject.children[0].material.color.setHex(Color);
-  },
-  "./static/Models/Bench/Bench.gltf": function (Color) { //Bench
-    selectedObject.children[0].material.color.setHex(Color);
-  },
-  "./static/Models/Tree/Tree.glb": function (Color) { //Tree
-    selectedObject.children[0].children.forEach(element => {
-      element.material.color.setHex(Color);
-    });
-  }
-}
+// let materialLocation = {
+//   "./static/Models/Sofa/Sofa.gltf": function (Color) {//Sofa
+//     selectedObject.children[0].material.color.setHex(Color);
+//   },
+//   "./static/Models/Bench/Bench.gltf": function (Color) { //Bench
+//     selectedObject.children[0].material.color.setHex(Color);
+//   },
+//   "./static/Models/Tree/Tree.glb": function (Color) { //Tree
+//     selectedObject.children[0].children.forEach(element => {
+//       element.material.color.setHex(Color);
+//     });
+//   }
+// }
 let materialColor = document.getElementsByClassName("colors");
+// for (let i = 0; i < materialColor.length; i++) {
+//   materialColor[i].addEventListener("click", () => {
+//     if (selectedObject != null) {
+//       materialLocation[selectedObject.userData.name](Colors[i]);
+//       selectedObject.material.needsUpdate = true;
+//     }
+//   });
+// }
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
     if (selectedObject != null) {
-      materialLocation[selectedObject.userData.name](Colors[i]);
+      selectedObject.traverse((child) => {
+        if (child.isMesh) {
+          child.material.color.setHex(Colors[i]);
+        }
+      })
       selectedObject.material.needsUpdate = true;
     }
   });
