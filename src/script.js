@@ -20,7 +20,6 @@ let hitTestSourceRequested = false;
 let selectedObject = null;
 let spawwnedObjects = [];
 
-let btn1;
 let isBlockingUI = false;
 
 function init() {
@@ -35,8 +34,6 @@ function init() {
     0.01,
     20
   );
-
-  //btn1 = document.getElementsByClassName("menu");
 
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   light.position.set(0.5, 1, 0.25);
