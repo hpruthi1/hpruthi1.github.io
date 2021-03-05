@@ -72,6 +72,7 @@ function init() {
           scene.add(mesh);
           spawwnedObjects.push(mesh);
           selectedObject = mesh;
+          selectedItemURL = "";
         },
         undefined,
         function (OnError) {
