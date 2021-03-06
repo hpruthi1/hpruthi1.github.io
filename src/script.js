@@ -55,6 +55,7 @@ function init() {
   let mouse = new THREE.Vector2();
   var mesh;
 
+  //On Select Function
   function onSelect() {
     if (!isBlockingUI) {
       let hitObject = getIntersection();
@@ -82,6 +83,7 @@ function init() {
       }
     }
   }
+
   window.addEventListener('pointerdown', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
@@ -104,10 +106,7 @@ function init() {
     }
   }
 
-  // controller = renderer.xr.getController(0);
-  // controller.addEventListener("select", onSelect);
-  // scene.add(controller);
-
+  //Reticle
   reticle = new THREE.Mesh(
     new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
     new THREE.MeshBasicMaterial()
@@ -178,6 +177,7 @@ function BindingSelectionEvent() {
   }
 }
 
+//UI blocking Function
 function BlockUI() {
   for (let i = 0; i < Buttons.length; i++) {
     Buttons[i].addEventListener(onmouseenter, () => {
