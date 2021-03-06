@@ -1,7 +1,6 @@
 import { GLTFLoader } from "../three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "../three/build/three.module.js";
 import { ARButton } from "../src/ARButton.js";
-import { Matrix3 } from "../three/src/Three.js";
 
 let container;
 let camera, scene, renderer;
@@ -36,6 +35,7 @@ function init() {
     0.01,
     20
   );
+
 
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   light.position.set(0.5, 1, 0.25);
@@ -214,28 +214,7 @@ let Colors = {
   3: "0xffff00",
 };
 
-// let materialLocation = {
-//   "./static/Models/Sofa/Sofa.gltf": function (Color) {//Sofa
-//     selectedObject.children[0].material.color.setHex(Color);
-//   },
-//   "./static/Models/Bench/Bench.gltf": function (Color) { //Bench
-//     selectedObject.children[0].material.color.setHex(Color);
-//   },
-//   "./static/Models/Tree/Tree.glb": function (Color) { //Tree
-//     selectedObject.children[0].children.forEach(element => {
-//       element.material.color.setHex(Color);
-//     });
-//   }
-// }
 let materialColor = document.getElementsByClassName("colors");
-// for (let i = 0; i < materialColor.length; i++) {
-//   materialColor[i].addEventListener("click", () => {
-//     if (selectedObject != null) {
-//       materialLocation[selectedObject.userData.name](Colors[i]);
-//       selectedObject.material.needsUpdate = true;
-//     }
-//   });
-// }
 for (let i = 0; i < materialColor.length; i++) {
   materialColor[i].addEventListener("click", () => {
     if (selectedObject != null) {
