@@ -1,12 +1,13 @@
 import { GLTFLoader } from "../three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "../three/build/three.module.js";
 import { ARButton } from "../src/ARButton.js";
+import { Matrix3 } from "../three/src/Three.js";
 
 let container;
 let camera, scene, renderer;
 let hitTestResults;
 let controller;
-let canRaycast = true;
+let tempMatrix = new THREE.Matrix4();
 let ItemInfo = {
   button1: "./static/Models/Sofa/Sofa.gltf",
   button2: "./static/Models/Bench/Bench.gltf",
@@ -21,6 +22,7 @@ let selectedObject = null;
 let spawwnedObjects = [];
 
 let isBlockingUI = false;
+let raycaster = new THREE.Raycaster();
 
 function init() {
   container = document.createElement("div");
@@ -51,45 +53,56 @@ function init() {
 
   //Selection Function
   let mouse = new THREE.Vector2();
-  let raycast = new THREE.Raycaster();
   var mesh;
 
   function onSelect() {
-    let hitObject = Raycast();
-    // if (hitObject) {
-    //   selectedObject = hitObject;
-    // } else {
-    if (reticle.visible && !isBlockingUI && selectedItemURL != "") {
-      loader.load(
-        selectedItemURL,
-        function (LoadModel) {
-          mesh = LoadModel.scene;
-          // mesh.userData.name = selectedItemURL;
-          mesh.position.setFromMatrixPosition(reticle.matrix);
-          scene.add(mesh);
-          spawwnedObjects.push(mesh);
-          selectedObject = mesh;
-          selectedItemURL = "";
-        },
-        undefined,
-        function (OnError) {
-          console.log("Error " + OnError);
+    if (!isBlockingUI) {
+      let hitObject = getIntersection(controller);
+      if (hitObject) {
+        selectedObject = hitObject;
+        alert('You Have selected an item')
+      } else {
+        if (reticle.visible && selectedItemURL != "") {
+          loader.load(
+            selectedItemURL,
+            function (LoadModel) {
+              mesh = LoadModel.scene;
+              // mesh.userData.name = selectedItemURL;
+              mesh.position.setFromMatrixPosition(reticle.matrix);
+              scene.add(mesh);
+              spawwnedObjects.push(mesh);
+              selectedObject = mesh;
+              selectedItemURL = "";
+            },
+            undefined,
+            function (OnError) {
+              console.log("Error " + OnError);
+            }
+          );
         }
-      );
+      }
     }
   }
-  //}
   window.addEventListener("click", () => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
   });
 
+  //Function Setting Ray position,Direction and Lines.
+  function getIntersection(controller) {
+    tempMatrix.identity().extractRotation(controller.matrixWorld);
+    raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+    raycaster.ray.direction.applyMatrix4(tempMatrix);
+    const intersect = Raycast();
+    return intersect;
+  }
+
+  //Raycast Function
   function Raycast() {
-    raycast.setFromCamera(mouse, camera);
-    let objects = raycast.intersectObjects(spawwnedObjects);
-    spawwnedObjects.forEach((element) => {
-      if (objects[0] === element) return objects[0];
-    });
+    let objectIntersected = raycaster.intersectObjects(spawwnedObjects);
+    if (objectIntersected[0]) {
+      return objectIntersected[0];
+    }
   }
 
   controller = renderer.xr.getController(0);
@@ -144,7 +157,7 @@ function render(timestamp, frame) {
     if (hitTestSource) {
       hitTestResults = frame.getHitTestResults(hitTestSource);
 
-      if (hitTestResults.length && canRaycast) {
+      if (hitTestResults.length) {
         const hit = hitTestResults[0];
         reticle.visible = true;
         reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
