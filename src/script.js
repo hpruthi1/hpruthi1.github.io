@@ -60,7 +60,7 @@ function init() {
       let hitObject = getIntersection(controller);
       if (hitObject) {
         selectedObject = hitObject;
-        alert('You Have selected an item')
+        alert('You Have selected an item');
       } else {
         if (reticle.visible && selectedItemURL != "") {
           loader.load(
@@ -83,17 +83,21 @@ function init() {
       }
     }
   }
-  addEventListener('mousedown', (event) => {
+  const text = document.getElementById('test');
+  window.addEventListener('touchstart', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
+    console.log(mouse);
+    text.textContent = mouse;
+    onSelect();
   });
 
   //Function Setting Ray position,Direction and Lines.
   function getIntersection(controller) {
-    tempMatrix.identity().extractRotation(controller.matrixWorld);
-    raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
-    raycaster.ray.direction.applyMatrix4(tempMatrix);
-    // raycaster.setFromCamera(mouse, camera);
+    // tempMatrix.identity().extractRotation(controller.matrixWorld);
+    // raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+    // raycaster.ray.direction.applyMatrix4(tempMatrix);
+    raycaster.setFromCamera(mouse, camera);
     const intersect = Raycast();
     return intersect;
   }
@@ -106,9 +110,9 @@ function init() {
     }
   }
 
-  controller = renderer.xr.getController(0);
-  controller.addEventListener("select", onSelect);
-  scene.add(controller);
+  // controller = renderer.xr.getController(0);
+  // controller.addEventListener("select", onSelect);
+  // scene.add(controller);
 
   reticle = new THREE.Mesh(
     new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
