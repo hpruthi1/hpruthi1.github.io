@@ -83,16 +83,17 @@ function init() {
       }
     }
   }
-  window.addEventListener("click", () => {
+  addEventListener('mousedown', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
   });
 
   //Function Setting Ray position,Direction and Lines.
   function getIntersection(controller) {
-    tempMatrix.identity().extractRotation(controller.matrixWorld);
-    raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
-    raycaster.ray.direction.applyMatrix4(tempMatrix);
+    // tempMatrix.identity().extractRotation(controller.matrixWorld);
+    // raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+    // raycaster.ray.direction.applyMatrix4(tempMatrix);
+    raycaster.setFromCamera(mouse, camera);
     const intersect = Raycast();
     return intersect;
   }
