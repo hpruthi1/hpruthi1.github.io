@@ -57,7 +57,7 @@ function init() {
 
   function onSelect() {
     if (!isBlockingUI) {
-      let hitObject = getIntersection(controller);
+      let hitObject = getIntersection();
       if (hitObject) {
         selectedObject = hitObject;
         alert('You Have selected an item');
@@ -67,7 +67,6 @@ function init() {
             selectedItemURL,
             function (LoadModel) {
               mesh = LoadModel.scene;
-              // mesh.userData.name = selectedItemURL;
               mesh.position.setFromMatrixPosition(reticle.matrix);
               scene.add(mesh);
               spawwnedObjects.push(mesh);
@@ -83,20 +82,15 @@ function init() {
       }
     }
   }
-  const text = document.getElementById('test');
-  window.addEventListener('touchstart', (event) => {
+  window.addEventListener('pointerdown', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
     console.log(mouse);
-    text.textContent = mouse;
     onSelect();
   });
 
   //Function Setting Ray position,Direction and Lines.
-  function getIntersection(controller) {
-    // tempMatrix.identity().extractRotation(controller.matrixWorld);
-    // raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
-    // raycaster.ray.direction.applyMatrix4(tempMatrix);
+  function getIntersection() {
     raycaster.setFromCamera(mouse, camera);
     const intersect = Raycast();
     return intersect;
