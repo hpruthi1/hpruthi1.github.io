@@ -5,8 +5,6 @@ import { ARButton } from "../src/ARButton.js";
 let container;
 let camera, scene, renderer;
 let hitTestResults;
-let controller;
-let tempMatrix = new THREE.Matrix4();
 let ItemInfo = {
   button1: "./static/Models/Sofa/Sofa.gltf",
   button2: "./static/Models/Bench/Bench.gltf",
@@ -87,7 +85,6 @@ function init() {
   window.addEventListener('pointerdown', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
-    console.log(mouse);
     onSelect();
   });
 
