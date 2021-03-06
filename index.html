@@ -45,7 +45,7 @@
       text-align: center;
     }
 
-    .form-container .cancel {
+    .form-container #cancel {
       background-color: red;
       position: relative;
       bottom: -150px;
@@ -100,7 +100,7 @@
       text-align: center;
     }
 
-    .scaleForm-container .cancel_btn{
+    .scaleForm-container #cancel_btn{
       background-color: red;
       position: relative;
       bottom: -40px;
@@ -139,7 +139,7 @@
       text-align: center;
     }
 
-     .popupClose{
+     #popupClose{
       background-color: red;
       position: relative;
       bottom: -110px;
@@ -193,7 +193,7 @@
             Model2</button>
             <button type="button" id="button3" class="buttons">
               Model3</button>
-        <button type="button" class="btn cancel" onclick="closePanel()">
+        <button type="button" class="button" id="cancel" onclick="closePanel()">
           Close
           </div>
         </button>
@@ -212,7 +212,7 @@
             <p>Width:</p>
             <input type="range"id="WidthSlider" min="1" max="5" step="0.5" />
             </div>
-        <button type="button" class="cancel_btn" onclick="closeScalePanel()">
+        <button type="button" class="button" id="cancel_btn" onclick="closeScalePanel()">
           Close        </button>
       </form>
     </div>
@@ -229,7 +229,7 @@
                 BLUE</button>
                 <button type="button" id="color4" class="colors">
                   YELLOW</button>
-        <button type="button" class="popupClose" onclick="closeColorPanel()">
+        <button type="button" class="button" id="popupClose" onclick="closeColorPanel()">
           Close        </button>
       </form>
           </div>
