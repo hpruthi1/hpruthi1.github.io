@@ -90,10 +90,10 @@ function init() {
 
   //Function Setting Ray position,Direction and Lines.
   function getIntersection(controller) {
-    // tempMatrix.identity().extractRotation(controller.matrixWorld);
-    // raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
-    // raycaster.ray.direction.applyMatrix4(tempMatrix);
-    raycaster.setFromCamera(mouse, camera);
+    tempMatrix.identity().extractRotation(controller.matrixWorld);
+    raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+    raycaster.ray.direction.applyMatrix4(tempMatrix);
+    // raycaster.setFromCamera(mouse, camera);
     const intersect = Raycast();
     return intersect;
   }
