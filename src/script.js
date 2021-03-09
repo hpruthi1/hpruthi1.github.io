@@ -4,12 +4,13 @@ import { ARButton } from "../src/ARButton.js";
 
 let container;
 let camera, scene, renderer;
+let controller;
 let index = 0; //Variable storing index of selected Items.
 let hitTestResults;
 let ItemInfo = {
-  button1: "./static/Models/Sofa/Sofa.gltf",
-  button2: "./static/Models/Bench/Bench.gltf",
-  button3: "./static/Models/Tree/Tree.glb",
+  button1: "./static/Models/Chair1/Chair1.gltf",
+  button2: "./static/Models/Chair/Chair.gltf",
+  button3: "./static/Models/Stool/Stool.gltf",
 };
 let selectedItemURL = ItemInfo.button1;
 let reticle;
@@ -49,7 +50,6 @@ function init() {
   );
 
   //Selection Function
-  let mouse = new THREE.Vector2();
   var mesh;
 
   //On Select Function
@@ -59,12 +59,29 @@ function init() {
         loader.load(
           selectedItemURL,
           function (LoadModel) {
+            selectedItemURL = "";
             mesh = LoadModel.scene;
             mesh.position.setFromMatrixPosition(reticle.matrix);
             scene.add(mesh);
             spawwnedObjects.push(mesh);
             selectedObject = mesh;
-            selectedItemURL = "";
+            if (spawwnedObjects.length) {
+              spawwnedObjects.forEach(element => {
+                if (element === selectedObject) {
+                  element.traverse((child) => {
+                    if (child.isMesh) {
+                      child.material.opacity = 1;
+                    }
+                  })
+                } else {
+                  element.traverse((child) => {
+                    if (child.isMesh) {
+                      child.material.opacity = 0.4;
+                    }
+                  })
+                }
+              });
+            }
           },
           undefined,
           function (OnError) {
@@ -80,32 +97,47 @@ function init() {
   const nextButton = document.getElementById("Next");
 
   function OnpreviousButtonClick() {
-    console.log("Previous");
     if (spawwnedObjects.length) {
-      index = spawwnedObjects.indexOf(selectedObject);
-      index = (index - 1) % spawwnedObjects.length;
+      let previousIndex = spawwnedObjects.indexOf(selectedObject);
+      index = (previousIndex - 1) % spawwnedObjects.length;
       selectedObject = spawwnedObjects[index];
+      selectedObject.traverse((child) => {
+        if (child.isMesh) {
+          child.material.opacity = 1;
+        }
+      })
+      spawwnedObjects[previousIndex].traverse((child) => {
+        if (child.isMesh) {
+          child.material.opacity = 0.4;
+        }
+      })
     }
   }
 
   previousButton.addEventListener("click", OnpreviousButtonClick);
 
   function OnNextButtonClick() {
-    console.log("Next");
     if (spawwnedObjects.length) {
-      index = spawwnedObjects.indexOf(selectedObject);
-      index = (index + 1) % spawwnedObjects.length;
+      let previousIndex = spawwnedObjects.indexOf(selectedObject);
+      index = (previousIndex + 1) % spawwnedObjects.length;
       selectedObject = spawwnedObjects[index];
+      selectedObject.traverse((child) => {
+        if (child.isMesh) {
+          child.material.opacity = 1;
+        }
+      })
+      spawwnedObjects[previousIndex].traverse((child) => {
+        if (child.isMesh) {
+          child.material.opacity = 0.4;
+        }
+      })
     }
   }
 
   nextButton.addEventListener("click", OnNextButtonClick);
 
-  window.addEventListener("pointerdown", (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
-    onSelect();
-  });
+  controller = renderer.xr.getController(0);
+  controller.addEventListener('select', onSelect);
 
   //Reticle
   reticle = new THREE.Mesh(
