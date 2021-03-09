@@ -192,23 +192,6 @@ function BlockUI() {
 
 BlockUI();
 
-//Delete Function to remove selected mesh.
-function Delete() {
-  if (selectedObject != null) {
-    scene.remove(selectedObject);
-    if (spawwnedObjects.indexOf(selectedObject) < spawwnedObjects.length) {
-      index = spawwnedObjects.indexOf(selectedObject) - 1;
-      selectedObject = spawwnedObjects[index];
-    }
-    else {
-      index = 0;
-      selectedObject = null;
-    }
-    selectedItemURL = "";
-    spawnned = false;
-  }
-}
-
 let deleteButton = document.getElementById("DeleteButton");
 deleteButton.addEventListener("click", Delete);
 
