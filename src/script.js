@@ -4,7 +4,7 @@ import { ARButton } from "../src/ARButton.js";
 
 let container;
 let camera, scene, renderer;
-let index = 0; //Variable stroing index of selected Items.
+let index = 0; //Variable storing index of selected Items.
 let hitTestResults;
 let ItemInfo = {
   button1: "./static/Models/Sofa/Sofa.gltf",
@@ -20,7 +20,6 @@ let selectedObject = null;
 let spawwnedObjects = [];
 
 let isBlockingUI = false;
-let raycaster = new THREE.Raycaster();
 
 function init() {
   container = document.createElement("div");
@@ -197,7 +196,14 @@ BlockUI();
 function Delete() {
   if (selectedObject != null) {
     scene.remove(selectedObject);
-    selectedObject = null;
+    if (spawwnedObjects.indexOf(selectedObject) < spawwnedObjects.length) {
+      index = spawwnedObjects.indexOf(selectedObject) - 1;
+      selectedObject = spawwnedObjects[index];
+    }
+    else {
+      index = 0;
+      selectedObject = null;
+    }
     selectedItemURL = "";
     spawnned = false;
   }
