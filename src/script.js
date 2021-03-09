@@ -34,7 +34,6 @@ function init() {
     20
   );
 
-
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   light.position.set(0.5, 1, 0.25);
   scene.add(light);
@@ -81,6 +80,7 @@ function init() {
   const nextButton = document.getElementById("Next");
 
   function OnpreviousButtonClick() {
+    console.log("Previous");
     if (spawwnedObjects.length) {
       index = spawwnedObjects.indexOf(selectedObject);
       index = (index - 1) % spawwnedObjects.length;
@@ -88,9 +88,10 @@ function init() {
     }
   }
 
-  previousButton.addEventListener('click', OnpreviousButtonClick());
+  previousButton.addEventListener("click", OnpreviousButtonClick);
 
   function OnNextButtonClick() {
+    console.log("Next");
     if (spawwnedObjects.length) {
       index = spawwnedObjects.indexOf(selectedObject);
       index = (index + 1) % spawwnedObjects.length;
@@ -98,9 +99,9 @@ function init() {
     }
   }
 
-  nextButton.addEventListener('click', OnNextButtonClick());
+  nextButton.addEventListener("click", OnNextButtonClick);
 
-  window.addEventListener('pointerdown', (event) => {
+  window.addEventListener("pointerdown", (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
     onSelect();
@@ -192,9 +193,6 @@ function BlockUI() {
 
 BlockUI();
 
-let deleteButton = document.getElementById("DeleteButton");
-deleteButton.addEventListener("click", Delete);
-
 //Object Selection
 let Colors = {
   0: "0xff0000",
@@ -211,7 +209,7 @@ for (let i = 0; i < materialColor.length; i++) {
         if (child.isMesh) {
           child.material.color.setHex(Colors[i]);
         }
-      })
+      });
       selectedObject.material.needsUpdate = true;
     }
   });

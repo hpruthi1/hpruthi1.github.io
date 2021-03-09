@@ -154,6 +154,20 @@
       right: 37%;
     }
 
+    #Previous{
+      display: block;
+      bottom: 150px;
+      position: fixed;
+      right: 55%;
+    }
+
+    #Next{
+      display: block;
+      bottom: 150px;
+      position: fixed;
+      right: 25%;
+    }
+
  </style>
   <body>
     <script>
@@ -183,8 +197,8 @@
     </script>
 
     <div id = "content">
-      <button id="Previous">Previous</button>
-<button id="Next">Next</button>
+      <button type="button" id="Previous">Previous</button>
+<button type="button" id="Next">Next</button>
       <button class="menu" onclick="openForm()">Open Menu</button>
     <div class="popup" id="myForm">
       <form class="form-container">
