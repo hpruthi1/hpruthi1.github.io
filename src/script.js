@@ -80,23 +80,26 @@ function init() {
   //Selection
   const previousButton = document.getElementById("Previous");
   const nextButton = document.getElementById("Next");
-  previousButton.addEventListener('click', () => {
+
+  function OnpreviousButtonClick() {
     if (spawwnedObjects.length) {
       index = spawwnedObjects.indexOf(selectedObject);
       index = (index - 1) % spawwnedObjects.length;
       selectedObject = spawwnedObjects[index];
-      alert(selectedObject.name + " index " + index);
     }
-  })
+  }
 
-  nextButton.addEventListener('click', () => {
+  previousButton.addEventListener('click', OnpreviousButtonClick());
+
+  function OnNextButtonClick() {
     if (spawwnedObjects.length) {
       index = spawwnedObjects.indexOf(selectedObject);
       index = (index + 1) % spawwnedObjects.length;
       selectedObject = spawwnedObjects[index];
-      alert(selectedObject.name + " index " + index);
     }
-  })
+  }
+
+  nextButton.addEventListener('click', OnNextButtonClick());
 
   window.addEventListener('pointerdown', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
