@@ -4,6 +4,7 @@ import { ARButton } from "../src/ARButton.js";
 
 let container;
 let camera, scene, renderer;
+let index = 0; //Variable stroing index of selected Items.
 let hitTestResults;
 let ItemInfo = {
   button1: "./static/Models/Sofa/Sofa.gltf",
@@ -56,52 +57,52 @@ function init() {
   //On Select Function
   function onSelect() {
     if (!isBlockingUI) {
-      let hitObject = getIntersection();
-      if (hitObject) {
-        selectedObject = hitObject;
-        alert('You Have selected an item');
-      } else {
-        if (reticle.visible && selectedItemURL != "") {
-          loader.load(
-            selectedItemURL,
-            function (LoadModel) {
-              mesh = LoadModel.scene;
-              mesh.position.setFromMatrixPosition(reticle.matrix);
-              scene.add(mesh);
-              spawwnedObjects.push(mesh);
-              selectedObject = mesh;
-              selectedItemURL = "";
-            },
-            undefined,
-            function (OnError) {
-              console.log("Error " + OnError);
-            }
-          );
-        }
+      if (reticle.visible && selectedItemURL != "") {
+        loader.load(
+          selectedItemURL,
+          function (LoadModel) {
+            mesh = LoadModel.scene;
+            mesh.position.setFromMatrixPosition(reticle.matrix);
+            scene.add(mesh);
+            spawwnedObjects.push(mesh);
+            selectedObject = mesh;
+            selectedItemURL = "";
+          },
+          undefined,
+          function (OnError) {
+            console.log("Error " + OnError);
+          }
+        );
       }
     }
   }
+
+  //Selection
+  const previousButton = document.getElementById("Previous");
+  const nextButton = document.getElementById("Next");
+  previousButton.addEventListener('click', () => {
+    if (spawwnedObjects.length) {
+      index = spawwnedObjects.indexOf(selectedObject);
+      index = (index - 1) % spawwnedObjects.length;
+      selectedObject = spawwnedObjects[index];
+      alert(selectedObject.name + " index " + index);
+    }
+  })
+
+  nextButton.addEventListener('click', () => {
+    if (spawwnedObjects.length) {
+      index = spawwnedObjects.indexOf(selectedObject);
+      index = (index + 1) % spawwnedObjects.length;
+      selectedObject = spawwnedObjects[index];
+      alert(selectedObject.name + " index " + index);
+    }
+  })
 
   window.addEventListener('pointerdown', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
     onSelect();
   });
-
-  //Function Setting Ray position,Direction and Lines.
-  function getIntersection() {
-    raycaster.setFromCamera(mouse, camera);
-    const intersect = Raycast();
-    return intersect;
-  }
-
-  //Raycast Function
-  function Raycast() {
-    let objectIntersected = raycaster.intersectObjects(spawwnedObjects);
-    if (objectIntersected[0]) {
-      return objectIntersected[0];
-    }
-  }
 
   //Reticle
   reticle = new THREE.Mesh(
