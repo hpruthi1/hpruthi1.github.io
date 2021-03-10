@@ -141,7 +141,7 @@ function init() {
 
   //Reticle
   reticle = new THREE.Mesh(
-    new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
+    new THREE.RingGeometry(0.05, 0.10, 32).rotateX(-Math.PI / 2),
     new THREE.MeshBasicMaterial()
   );
   reticle.matrixAutoUpdate = false;
